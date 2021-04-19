@@ -59,14 +59,33 @@ module.exports = class TK303Adapter {
             const latitude_level = dataFrame[8];
             const longitude = dataFrame[9];
             const longitude_level = dataFrame[10];
-            const speed = dataFrame[11]? dataFrame[11]: 0;
-            const direction = dataFrame[12];
-            const altitude = dataFrame[13];
-            const acc_state = dataFrame[14];
-            const door_state = dataFrame[15];
-            const fuel_level = dataFrame[16].split('%')[0];
-            const fuel_2 = dataFrame[17];
-            const temperature = dataFrame[18].split(';')[0];
+            try{
+                const speed = dataFrame[11]? dataFrame[11]: 0;
+                const direction = dataFrame[12];
+                const altitude = dataFrame[13];
+                const acc_state = dataFrame[14];
+                const door_state = dataFrame[15];
+                const fuel_level = dataFrame[16].split('%')[0];
+                const fuel_2 = dataFrame[17];
+                const temperature = dataFrame[18].split(';')[0];
+            }catch{
+                const speed =  0;
+                const direction = '';
+                const altitude = '';
+                const acc_state = 0;
+                const door_state = '';
+                const fuel_level = 0;
+                const fuel_2 = 0;
+                const temperature = '';
+            }
+            // const speed = dataFrame[11]? dataFrame[11]: 0;
+            // const direction = dataFrame[12];
+            // const altitude = dataFrame[13];
+            // const acc_state = dataFrame[14];
+            // const door_state = dataFrame[15];
+            // const fuel_level = dataFrame[16].split('%')[0];
+            // const fuel_2 = dataFrame[17];
+            // const temperature = dataFrame[18].split(';')[0];
 
             const decodedData = {
                 imei,
@@ -80,14 +99,14 @@ module.exports = class TK303Adapter {
                 latitude_level,
                 longitude,
                 longitude_level,
-                speed,
-                direction,
-                altitude,
-                acc_state,
-                door_state,
-                fuel_level,
-                fuel_2,
-                temperature,
+                speed: speed? speed:0,
+                direction: direction? direction:'0',
+                altitude: altitude? altitude: '',
+                acc_state: acc_state? acc_state: 0,
+                door_state: door_state? door_state: 0,
+                fuel_level: fuel_level? fuel_level:0,
+                fuel_2: fuel_2? fuel_2:0,
+                temperature: temperature? temperature: '',
             };
 
             return {
