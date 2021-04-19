@@ -65,7 +65,7 @@ module.exports = class TK303Adapter {
             const acc_state = dataFrame[14];
             const door_state = dataFrame[15];
             const fuel_level = dataFrame[16].split('%')[0];
-            const fuel_2 = dataFrame[17].split('%')[0];
+            const fuel_2 = dataFrame[17];
             const temperature = dataFrame[18].split(';')[0];
 
             const decodedData = {
