@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous" />
+    <style>
+        .block {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    </style>
+    <script>
+        var timer;
+
+        function start() {
+            timer = setInterval(function() {
+                document.getElementById("data-form").submit();
+            }, 5000);
+        }
+
+        function stop() {
+            clearInterval(timer);
+        }
+
+        function setFuel(value) {
+            var element = document.getElementById("fuel_value");
+            element.innerHTML = value;
+            //document.getElementById("fuel_value").innerText(value);
+        }
+    </script>
+    <title>Simulator</title>
+</head>
+
+<body>
+    <div class="container">
+        <form action="http://localhost:3000/" method="post" id="data-form">
+            <div class="block">
+                <!-- IMEI-->
+                <div class="mb-3">
+                    <label for="imei" class="form-label">IMEI</label>
+                    <input type="text" class="form-control" id="imei" placeholder="imei" name="imei" value="123456789" />
+                </div>
+
+                <!-- phone-->
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="text" class="form-control" id="phone" placeholder="01......" name="phone" value="01001860957" />
+                </div>
+            </div>
+
+            <div class="block">
+                <!-- longitude-->
+                <div class="mb-3">
+                    <label for="longitude" class="form-label">longitude</label>
+                    <input type="text" class="form-control" id="longitude" name="longitude" value="34.1234" />
+                </div>
+                <!-- latitude-->
+                <div class="mb-3">
+                    <label for="latitude" class="form-label">latitude</label>
+                    <input type="text" class="form-control" id="latitude" name="latitude" value="33.2544" />
+                </div>
+            </div>
+
+            <div class="block">
+                <!-- Speed-->
+                <div class="mb-3">
+                    <label for="speed" class="form-label">Speed</label>
+                    <input type="number" class="form-control" id="speed" value="100" name="speed" />
+                </div>
+                <!-- temperature-->
+                <div class="mb-3">
+                    <label for="temperature" class="form-label">temperature</label>
+                    <input type="number" class="form-control" id="temperature" name="temperature" value="30" />
+                </div>
+            </div>
+
+            <div class="block">
+                <!-- Door-->
+                <div class="mb-3">
+                    <label for="door" class="form-label">door</label>
+                    <input type="number" class="form-control" id="door" name="door" value="0" />
+                </div>
+
+                <!-- ACC-->
+                <div class="mb-3">
+                    <label for="acc" class="form-label">acc</label>
+                    <input type="number" class="form-control" id="acc" name="acc" value="1" />
+                </div>
+            </div>
+
+            <div class="block">
+                <!-- fuel-->
+                <label for="feul" class="form-label">fuel</label>
+                <input type="range" class="form-range" id="feul" name="fuel" value="0" min="0" max="100" value="80" step="1" onchange="setFuel(this.value)" />
+                <span id="fuel_value"></span>%
+            </div>
+
+            <label for="keyword">Keyword</label>
+
+            <select name="Keyword" id="keyword">
+          <option value="Tracking">Tracking</option>
+          <option value="saab">Saab</option>
+          <option value="mercedes">Mercedes</option>
+          <option value="audi">Audi</option>
+        </select>
+        </form>
+        <button class="btn btn-success" onclick="start()">start</button>
+        <button class="btn btn-danger" onclick="stop()">stop</button>
+    </div>
+</body>
+
+</html>
