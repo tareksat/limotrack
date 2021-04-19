@@ -10,6 +10,7 @@ module.exports = () => {
 
     server.on("message", async(message, info) => {
         try {
+            console.log(message.toString())
             await TK303Adapter.adapterController(
                 message.toString(),
                 server,

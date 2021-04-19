@@ -6,7 +6,7 @@ module.exports = class TK303Adapter {
 
         // decode data
         const dataFrame = TK303Adapter.decode(data);
-        console.log(dataFrame);
+        //console.log(dataFrame);
         if (!dataFrame) return;
 
         // check that device is registred and has a valid subscription
@@ -30,7 +30,6 @@ module.exports = class TK303Adapter {
     }
 
     static decode(data) {
-        console.log(data.toString());
         try {
             // to check for heartbeat packets
             const rePattern = new RegExp(/^\d{15}(,\d{15})*$/);
@@ -59,17 +58,14 @@ module.exports = class TK303Adapter {
             const latitude_level = dataFrame[8];
             const longitude = dataFrame[9];
             const longitude_level = dataFrame[10];
-
             const speed = dataFrame[11] ? dataFrame[11] : 0;
             const direction = dataFrame[12];
             const altitude = dataFrame[13];
             const acc_state = dataFrame[14];
             const door_state = dataFrame[15];
-            const fuel_level = dataFrame[16]?.split('%')[0];
+            const fuel_level = dataFrame[16].split('%')[0];
             const fuel_2 = dataFrame[17];
-            const temperature = dataFrame[18]?.split(';')[0];
-
-
+            const temperature = dataFrame[18].split(';')[0];
             const decodedData = {
                 imei,
                 keyword,
