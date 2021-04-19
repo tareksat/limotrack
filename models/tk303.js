@@ -22,7 +22,7 @@ const TK303 = sequelize.define(
         acc_state: {type: DataTypes.TINYINT(1), allowNull: true},
         door_state: {type: DataTypes.TINYINT(1), allowNull: true},
         fuel_level: {type: DataTypes.FLOAT, allowNull: true},
-        temperature: {type: DataTypes.FLOAT, allowNull: true},
+        temperature: {type: DataTypes.STRING, allowNull: true},
         keyword: DataTypes.STRING,
         fuel_consumption: DataTypes.FLOAT,
         distance: DataTypes.FLOAT,
