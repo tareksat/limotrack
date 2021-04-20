@@ -1,12 +1,12 @@
 const GPSUtils = require('../utils/gpsUtils');
-const TK303Service = require('../services/tk303.service');
+const TK103Service = require('../services/tk103.service');
 
-module.exports = class TK303Adapter {
+module.exports = class TK103Adapter {
 
     static async adapterController(data, server, port, ip) {
-        console.log('TK303');
+        console.log('TK103');
         // decode data
-        const dataFrame = TK303Adapter.decode(data);
+        const dataFrame = TK103Adapter.decode(data);
         //console.log(dataFrame);
         if (!dataFrame) return;
 
@@ -17,7 +17,7 @@ module.exports = class TK303Adapter {
         else if (dataFrame.request === "heartbeat")
             return server.send("ON", port, ip);
 
-        TK303Adapter.analyzeAndSaveData(dataFrame);
+        TK103Adapter.analyzeAndSaveData(dataFrame);
 
         server.send("ON", port, ip);
     }
@@ -40,6 +40,7 @@ module.exports = class TK303Adapter {
                     };
                 }
             }
+            //imei:864893036579301,tracker,210420200722,,F,200722.00,A,3002.84912,N,03111.73376,E,,;
             const imei = dataFrame[0];
             const keyword = dataFrame[1];
             const time = GPSUtils.convertGpsDate(dataFrame[2]);
@@ -52,13 +53,7 @@ module.exports = class TK303Adapter {
             const longitude = dataFrame[9];
             const longitude_level = dataFrame[10];
             const speed = dataFrame[11] ? dataFrame[11] : 0;
-            const direction = dataFrame[12];
-            const altitude = dataFrame[13];
-            const acc_state = dataFrame[14];
-            const door_state = dataFrame[15];
-            const fuel_level = dataFrame[16].split('%')[0];
-            const fuel_2 = dataFrame[17];
-            const temperature = dataFrame[18].split(';')[0];
+            const fuel_level = dataFrame[12];
             const decodedData = {
                 imei,
                 keyword,
@@ -72,13 +67,7 @@ module.exports = class TK303Adapter {
                 longitude: GPSUtils.convertCoordinates(longitude),
                 longitude_level,
                 speed: speed ? speed : 0,
-                direction: direction ? direction : '0',
-                altitude: altitude ? altitude : '',
-                acc_state: acc_state ? acc_state : 0,
-                door_state: door_state ? door_state : 0,
                 fuel_level: fuel_level ? fuel_level : 0,
-                fuel_2: fuel_2 ? fuel_2 : 0,
-                temperature: temperature ? temperature : '',
             };
 
             return {
@@ -92,29 +81,7 @@ module.exports = class TK303Adapter {
     }
 
     static async analyzeAndSaveData({data}) {
-        if (data.acc_state === '0' || !data.acc_state) {
-            console.log('Car Engine OFF no fuel data')
-            data.distance = 0;
-            data.fuel_consumption = 0;
-            return await TK303Service.saveRecord(data);
-        }
-        const lastRecord = await TK303Service.getlastRecordByImei(data.imei);
-        if (!lastRecord) { // in case this is the first record to be saved
-            console.log('First record for the car')
-            data.distance = 0;
-            data.fuel_consumption = 0;
-            return await TK303Service.saveRecord(data);
-        }
-        const fuel_diff = lastRecord.fuel_level - parseFloat(data.fuel_level);
-        if (fuel_diff < -1) {
-            // refuel
-            console.log('refuel: ', fuel_diff)
-        } else if (fuel_diff > 1) {
-            // fuel leakage
-            console.log('Fuel leakage', fuel_diff)
-        }
-        data.fuel_consumption = fuel_diff;
-        return await TK303Service.saveRecord(data);
+        return await TK103Service.saveRecord(data);
     }
 
 };

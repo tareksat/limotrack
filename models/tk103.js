@@ -2,8 +2,8 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../utils/database");
 const Sequelize = require('sequelize');
 
-const TK303 = sequelize.define(
-    "TK303", {
+const TK103 = sequelize.define(
+    "TK103", {
         id: {
             primaryKey: true,
             type: DataTypes.INTEGER,
@@ -20,17 +20,12 @@ const TK303 = sequelize.define(
         longitude: DataTypes.STRING,
         longitude_level: DataTypes.STRING,
         speed: {type: DataTypes.INTEGER, allowNull: true},
-        acc_state: {type: DataTypes.TINYINT(1), allowNull: true},
-        door_state: {type: DataTypes.TINYINT(1), allowNull: true},
         fuel_level: {type: DataTypes.FLOAT, allowNull: true},
-        temperature: {type: DataTypes.STRING, allowNull: true},
         keyword: DataTypes.STRING,
-        fuel_consumption: DataTypes.FLOAT,
-        distance: DataTypes.FLOAT,
         created_at: {type: DataTypes.DATE, defaultValue: Sequelize.NOW},
     }, {
-        tableName: "tk303",
+        tableName: "tk103",
     }
 );
 
-module.exports = TK303;
+module.exports = TK103;

@@ -1,5 +1,5 @@
 const udp = require("dgram");
-const TK303Adapter = require("./adapters/tk303.adapter");
+const DeviceUtils = require("./adapters/utils");
 
 const server = udp.createSocket("udp4");
 
@@ -10,15 +10,13 @@ module.exports = () => {
 
     server.on("message", async(message, info) => {
         try {
-            console.log(message.toString());
-            await TK303Adapter.adapterController(
+            console.log('message', message.toString());
+            await DeviceUtils.checkDeviceType(
                 message.toString(),
                 server,
                 info.port,
                 info.message
             );
-            // const data = encode(message.toString());
-            // console.log(await DeviceService.doesDeviceExists(data.imei));
         } catch (err) {
             console.log(err);
         }

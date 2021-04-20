@@ -9,13 +9,12 @@ module.exports = class DeviceService {
         const result = await Device.findOne({
             where: {
                 imei,
-                device_type_id: 1, // for tk303
                 subscription: {
                     [Op.gte]: date,
                 },
             },
         });
-        if (result) return true;
-        return false;
+        if(result) return result;
+        return null;
     }
 };
