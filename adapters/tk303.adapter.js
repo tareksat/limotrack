@@ -1,11 +1,11 @@
 const DeviceService = require("../services/device.service");
 const TK303Service = require('../services/tk303.service');
-const data = require('../services/data.service');
+const saveData = require('../services/data.service');
 
 module.exports = class TK303Adapter {
     static async adapterController(data, server, port, ip) {
         const _imei = TK303Adapter.getImei(data);
-            data({imei: _imei, data});
+        saveData({imei: _imei, data});
         // decode data
         const dataFrame = TK303Adapter.decode(data);
         //console.log(dataFrame);
