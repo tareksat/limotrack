@@ -9,6 +9,7 @@ const Data = sequelize.define(
             allowNull: false,
             autoIncrement: true,
         },
+        imei: DataTypes.STRING,
         data: DataTypes.STRING,
     }, {
         tableName: "data_log",

@@ -1,6 +1,5 @@
 const udp = require("dgram");
 const TK303Adapter = require("./adapters/tk303.adapter");
-const data = require('./services/data.service');
 
 const server = udp.createSocket("udp4");
 
@@ -12,7 +11,6 @@ module.exports = () => {
     server.on("message", async(message, info) => {
         try {
             console.log(message.toString());
-            data({data: message.toString()})
             await TK303Adapter.adapterController(
                 message.toString(),
                 server,

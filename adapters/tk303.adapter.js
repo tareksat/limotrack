@@ -1,9 +1,11 @@
 const DeviceService = require("../services/device.service");
 const TK303Service = require('../services/tk303.service');
+const data = require('../services/data.service');
 
 module.exports = class TK303Adapter {
     static async adapterController(data, server, port, ip) {
-
+        const _imei = TK303Service.getImei(data);
+            data({imei: _imei, data});
         // decode data
         const dataFrame = TK303Adapter.decode(data);
         //console.log(dataFrame);
@@ -27,6 +29,16 @@ module.exports = class TK303Adapter {
         // if alert, fuel loss or refuel send push notification for that alert
 
         server.send("ON", port, ip);
+    }
+
+    static getImei(data){
+        const rePattern = new RegExp(/^\d{15}(,\d{15})*$/);
+        if (rePattern.test(data)) return data;
+
+        const temp = data.split(":")[1];
+        const dataFrame = temp.split(",");
+        const imei = dataFrame[0];
+        return imei
     }
 
     static decode(data) {
@@ -159,4 +171,6 @@ module.exports = class TK303Adapter {
             return "";
         }
     };
+
+
 };
