@@ -86,9 +86,9 @@ module.exports = class TK303Adapter {
                 gps_signal,
                 gmt_time,
                 gps_status,
-                latitude,
+                latitude: TK303Adapter.convertCoordinates(latitude),
                 latitude_level,
-                longitude,
+                longitude: TK303Adapter.convertCoordinates(longitude),
                 longitude_level,
                 speed: speed ? speed : 0,
                 direction: direction ? direction : '0',
@@ -154,19 +154,13 @@ module.exports = class TK303Adapter {
         return date
     }
 
-    static convert_coordinates = (str) => {
-        if (!str) {
-            return "";
-        }
+    static convertCoordinates(str){
         try {
-            let lat = parseFloat(str);
-            let deg = Math.floor(lat / 100);
-            let min = Math.floor(lat - deg * 100);
-            let sec = lat % 1;
-            min = (min + sec);//.toFixed(4);
-            return (deg + min / 60 + sec / 3600);//.toFixed(7);
-
-            // return value;
+            const lat = parseFloat(str);
+            const deg = Math.floor(lat / 100);
+            const min = Math.floor(lat - deg * 100);
+            const sec = (lat-(deg*100 + min)).toFixed(5);
+            return ((deg + min / 60 + sec / 3600).toFixed(6)).toString();
         } catch (err) {
             return "";
         }
