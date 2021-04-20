@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 
-app.listen(3004, () => console.log("http server started on port 3000"));
+app.listen(3000, () => console.log("http server started on port 3004"));
 
 app.get("/", (req, res) => {
     //res.sendFile(path.join(__dirname, "views", "main.html"));
