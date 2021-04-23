@@ -1,19 +1,11 @@
-const latitude = '2958.27003';
-const longitude = '03115.52756';
+function convert(str) {
+    const lat = parseFloat(str);
+    const deg = Math.floor(lat / 100);
+    const min = (lat - deg * 100).toFixed(5);
+    return(deg+min/60).toFixed(5);
+}
 
-convert_coordinates = (str) => {
-    if (str === "") {
-        return "";
-    }
-    try {
-        const lat = parseFloat(str);
-        const deg = Math.floor(lat / 100);
-        const min = Math.floor(lat - deg * 100);
-        const sec = (lat-(deg*100 + min)).toFixed(5);
-        return ((deg + min / 60 + sec / 3600).toFixed(6)).toString();
-    } catch (err) {
-        return "";
-    }
-};
+const lat = '3002.84912';
+const long = '3111.73376 ';
 
-console.log(convert_coordinates(longitude), convert_coordinates(latitude))
+console.log(`${convert(lat)}, ${convert(long)}`)

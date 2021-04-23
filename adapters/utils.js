@@ -13,7 +13,7 @@ class DeviceUtils {
         if (!device) return null;
 
         // get device type and redirect to approperiate adapter
-        console.log(device.device_type_id);
+
         switch (device.device_type_id) {
             case 1:
                 return TK303Adapter.adapterController(data, server, port, ip);

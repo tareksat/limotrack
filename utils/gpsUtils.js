@@ -16,9 +16,8 @@ module.exports = GPSUtils = {
         try {
             const lat = parseFloat(str);
             const deg = Math.floor(lat / 100);
-            const min = Math.floor(lat - deg * 100);
-            const sec = (lat - (deg * 100 + min)).toFixed(5);
-            return ((deg + min / 60 + sec / 3600).toFixed(6)).toString();
+            const min = (lat - deg * 100).toFixed(5);
+            return(deg+min/60).toFixed(5);
         } catch (err) {
             return "";
         }
